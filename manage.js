@@ -6,17 +6,18 @@
 
 "use strict";
 
+require("dotenv").config(); // env
+
 // constants
 const SERVERNAME = "shopifyManageServer"; // server name
-const PORT = 3001; // default port number
-const ROOTURL = "https://manage.suijinclub.com"; // root
+const PORT = process.env.PORT; // default port number
+const ROOTURL = process.env.ROOTURL; // root
 const SHIPPING_FEE = 550; // posting fee
 
 // modules
 const express = require("express"); // express
 const basicAuth = require("basic-auth-connect"); // basic-auth
 const SQL = require("./class/sql.js"); // sql
-require("dotenv").config(); // env
 
 // express
 const app = express();
@@ -37,7 +38,7 @@ app.use(
 app.all(
     "/*",
     basicAuth((user, password) => {
-        return user === "admin" && password === "ebiebi225511";
+        return user === process.env.AUTHID && password === process.env.PASSWORD;
     })
 );
 
